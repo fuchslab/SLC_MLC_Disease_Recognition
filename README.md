@@ -1,0 +1,3 @@
+# MLC_SLC_Disease_Recognition
+This repository contains the Python code used to generate the model results reported in "Single-label and Multi-label Classification for Disease Recognition with Special Consideration of Comorbidities".
+The preprocessing strongly depends on the dataset used and is therefore not included. For each approach, i.e. binary SLC, multiclass SLC and MLC, we have uploaded two files (one with and one without class rebalancing). For MLC, the order of the target variables need to be adjusted accordingly.
