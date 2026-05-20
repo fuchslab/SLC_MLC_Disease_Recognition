@@ -27,7 +27,7 @@ y = data[target_cols] # target
 # load required packages
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import confusion_matrix
 
 # define grid search
 param_dict_dt = {
@@ -77,10 +77,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = best_model.predict(X_test)
     
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -150,10 +151,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = best_model.predict(X_test)
     
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -222,10 +224,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = best_model.predict(X_test)
     
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -296,10 +299,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = best_model.predict(X_test)
     
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -366,10 +370,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = best_model.predict(X_test)
     
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
