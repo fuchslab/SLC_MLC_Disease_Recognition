@@ -41,13 +41,13 @@ from sklearn.multioutput import ClassifierChain
 # load required packages
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import confusion_matrix
 
 # define grid search
 params_dt = {
-    "base_estimator__criterion" : ["gini", "entropy"],
-    "base_estimator__max_depth": range(3,8),
-    "base_estimator__min_samples_split": range(5,10)
+    "estimator__criterion" : ["gini", "entropy"],
+    "estimator__max_depth": range(3,8),
+    "estimator__min_samples_split": range(5,10)
     }
   
 # specify inner and outer loop
@@ -169,10 +169,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = pred[:, 3]
 
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -195,10 +196,10 @@ from sklearn.ensemble import RandomForestClassifier
 
 # define grid search
 params_rf = {
-    "base_estimator__n_estimators": [10, 25, 50 , 100, 250],
-    "base_estimator__criterion" : ["gini", "entropy"],
-    "base_estimator__max_depth": range(3,8),
-    "base_estimator__min_samples_split": range(5,10)
+    "estimator__n_estimators": [10, 25, 50 , 100, 250],
+    "estimator__criterion" : ["gini", "entropy"],
+    "estimator__max_depth": range(3,8),
+    "estimator__min_samples_split": range(5,10)
     }
   
 # specify inner and outer loop
@@ -320,10 +321,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = pred[:, 3]
 
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -346,9 +348,9 @@ from sklearn.linear_model import LogisticRegression
 
 # define grid search
 params_lr = {
-    "base_estimator__penalty" : ["l2", None],
-    "base_estimator__tol" : [0.0001, 0.0005, 0.001],
-    "base_estimator__solver" : ["lbfgs", "newton-cg", "saga", "sag"]
+    "estimator__penalty" : ["l2", None],
+    "estimator__tol" : [0.0001, 0.0005, 0.001],
+    "estimator__solver" : ["lbfgs", "newton-cg", "saga", "sag"]
     }
   
 # specify inner and outer loop
@@ -470,10 +472,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = pred[:, 3]
 
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -496,12 +499,12 @@ from sklearn.neural_network import MLPClassifier
 
 # define grid search
 params_mlp = {
-    "base_estimator__hidden_layer_sizes": [(100,), (100, 100), (100, 100, 100), (100, 100, 100, 100), (100, 100, 100, 100, 100)],
-    "base_estimator__solver": ["lbfgs", "sgd", "adam"],
-    "base_estimator__activation": ["logistic", "relu"],
-    "base_estimator__alpha": [0.0001, 0.0005, 0.001],
-    "base_estimator__learning_rate": ["constant", "invscaling", "adaptive"],
-    "base_estimator__learning_rate_init": [0.0001, 0.001, 0.01]
+    "estimator__hidden_layer_sizes": [(100,), (100, 100), (100, 100, 100), (100, 100, 100, 100), (100, 100, 100, 100, 100)],
+    "estimator__solver": ["lbfgs", "sgd", "adam"],
+    "estimator__activation": ["logistic", "relu"],
+    "estimator__alpha": [0.0001, 0.0005, 0.001],
+    "estimator__learning_rate": ["constant", "invscaling", "adaptive"],
+    "estimator__learning_rate_init": [0.0001, 0.001, 0.01]
 }
   
 # specify inner and outer loop
@@ -623,10 +626,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = pred[:, 3]
 
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
@@ -649,7 +653,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 # define grid search
 params_knn = {
-    "base_estimator__n_neighbors": [3, 5, 15, 25]
+    "estimator__n_neighbors": [3, 5, 15, 25]
     }
   
 # specify inner and outer loop
@@ -771,10 +775,11 @@ for train_id, test_id in outer_cv.split(X):
     pred = pred[:, 3]
 
     # evaluate the model
-    f1 = f1_score(y_test, pred)
-    sensitivity = recall_score(y_test, pred)
-    precision = precision_score(y_test, pred)
-    specificity = recall_score(y_test, pred, pos_label = 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, pred).ravel()        
+    sensitivity = tp / (tp + fn)        
+    specificity = tn / (tn + fp)        
+    precision = tp / (tp + fp)            
+    f1 = (2*tp) / (2*tp + fp + fn)
     metrics = [sensitivity, specificity, precision, f1]
      
     # store result
